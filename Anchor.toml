@@ -5,13 +5,13 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-susd_core = "2jHyq6V2wcxHSA1Wk4shY3B4bZooKoW1VjMWnagd1tda"
+slvt_core = "5rzosayUo9e8CmXit4ydqu8uk3tCGFFqUdhHCASFe5ho"
 
 [provider]
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "pnpm run test"
+test = "npx tsx tests/susd-core.ts"
 
 [hooks]

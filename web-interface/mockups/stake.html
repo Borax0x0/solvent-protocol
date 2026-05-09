@@ -1,0 +1,180 @@
+<!-- Solvent: Stake SLVT -->
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solvent Protocol - Stake</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "secondary-fixed-dim": "#7dd8af", "surface-bright": "#323b35", "surface-dim": "#0c1510",
+                "surface-container-high": "#232c26", "on-secondary": "#003826", "on-tertiary-fixed-variant": "#544600",
+                "on-surface-variant": "#b9cbbe", "surface-tint": "#00e29d", "inverse-primary": "#006c49",
+                "inverse-surface": "#dbe5dc", "on-error-container": "#ffdad6", "tertiary-fixed": "#ffe16a",
+                "tertiary": "#fffcff", "primary-fixed": "#47ffb8", "surface": "#0c1510", "primary-fixed-dim": "#00e29d",
+                "on-surface": "#dbe5dc", "on-primary-fixed": "#002113", "on-tertiary": "#3a3000",
+                "primary-container": "#00ffb2", "secondary": "#7dd8af", "outline": "#83958a",
+                "error-container": "#93000a", "on-error": "#690005", "on-secondary-container": "#9bf7cc",
+                "on-tertiary-container": "#756200", "secondary-container": "#027452",
+                "surface-container-low": "#141e18", "on-secondary-fixed": "#002114",
+                "on-secondary-fixed-variant": "#005138", "on-primary-container": "#00724d",
+                "on-background": "#dbe5dc", "surface-variant": "#2d3731", "on-primary-fixed-variant": "#005236",
+                "outline-variant": "#3a4a41", "on-tertiary-fixed": "#221b00", "inverse-on-surface": "#29332d",
+                "background": "#0c1510", "tertiary-container": "#ffdf5a", "primary": "#f7fff8",
+                "error": "#ffb4ab", "surface-container-highest": "#2d3731", "surface-container-lowest": "#07100b",
+                "secondary-fixed": "#99f5ca", "on-primary": "#003824", "surface-container": "#18221c",
+                "tertiary-fixed-dim": "#e3c542"
+              },
+              "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+              "spacing": { "margin-desktop": "40px", "xs": "8px", "sm": "12px", "md": "20px", "xl": "48px", "gutter": "16px", "base": "4px", "lg": "32px" },
+              "fontFamily": { "headline-lg": ["Inter"], "label-caps": ["Inter"], "body-lg": ["Inter"], "headline-md": ["Inter"], "body-sm": ["Inter"], "hero-num": ["Inter"], "data-mono": ["JetBrains Mono"] },
+              "fontSize": {
+                "headline-lg": ["26px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.08em", "fontWeight": "600" }],
+                "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "700" }],
+                "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                "hero-num": ["32px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                "data-mono": ["14px", { "lineHeight": "1", "fontWeight": "500" }]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+  .pulse-dot { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.5; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.5; } }
+</style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col pt-16 font-body-sm text-body-sm">
+<nav class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md px-margin-desktop h-16 flex items-center justify-between max-w-7xl mx-auto border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<span class="text-headline-md font-headline-lg font-extrabold text-primary-container tracking-tighter">Solvent</span>
+<div class="hidden md:flex items-center gap-sm ml-lg">
+<a class="text-on-surface-variant hover:text-on-surface pb-2 px-sm py-xs rounded" href="#">Deposit</a>
+<a class="text-primary-container border-b-2 border-primary-container font-bold pb-2 px-sm py-xs rounded" href="#">Stake</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 px-sm py-xs rounded" href="#">Redeem</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-2 px-sm py-xs rounded" href="#">Audit</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-data-mono font-data-mono text-on-surface-variant">$SLVT $1.42</span>
+<button class="bg-primary-container text-background font-[800] px-sm py-xs">Connect Wallet</button>
+</div>
+</nav>
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin-desktop py-xl">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter md:gap-md">
+<div class="col-span-1 md:col-span-7 flex flex-col gap-md">
+<div class="bg-surface border border-primary-container/15 p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-xs">
+<h2 class="text-headline-md font-headline-md text-on-surface">Current Exchange Rate</h2>
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">currency_exchange</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="text-data-mono font-data-mono text-on-surface-variant">1 sSLVT =</span>
+<span class="text-hero-num font-hero-num text-[#00FFB2]">1.0428</span>
+<span class="text-data-mono font-data-mono text-on-surface-variant">SLVT</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-xs">Rate increases organically over time as protocol yield is accrued to the staking pool.</p>
+</div>
+<div class="bg-surface border border-primary-container/15 p-md flex flex-col gap-md relative overflow-hidden">
+<div class="absolute -top-20 -right-20 w-40 h-40 bg-primary-container/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-xs">
+<h2 class="text-headline-md font-headline-md text-on-surface">Stake SLVT</h2>
+<div class="flex items-center gap-xs border border-primary-container/20 rounded px-sm py-base">
+<span class="w-1.5 h-1.5 bg-primary-container rounded-full pulse-dot"></span>
+<span class="text-label-caps font-label-caps text-primary-container">Pool Active</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-end">
+<label class="text-label-caps font-label-caps text-on-surface-variant">Amount to Stake</label>
+<span class="text-data-mono font-data-mono text-on-surface-variant text-xs">Balance: 12,450.00 SLVT</span>
+</div>
+<div class="relative">
+<input class="w-full bg-background border border-primary-container/20 text-data-mono font-data-mono text-on-surface p-sm focus:outline-none focus:border-primary-container" placeholder="0.00" type="text" value="1000.00"/>
+<button class="absolute right-xs top-1/2 -translate-y-1/2 text-label-caps font-label-caps text-primary-container bg-surface-container-highest px-2 py-1 rounded-sm">MAX</button>
+</div>
+</div>
+<div class="flex flex-col gap-xs bg-surface-container-lowest border border-outline-variant/30 p-sm">
+<div class="flex justify-between items-end">
+<label class="text-label-caps font-label-caps text-on-surface-variant">You Will Receive</label>
+<span class="material-symbols-outlined text-outline text-sm">arrow_downward</span>
+</div>
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-md font-headline-md text-on-surface">958.95</span>
+<span class="text-data-mono font-data-mono text-on-surface-variant">sSLVT</span>
+</div>
+<div class="text-xs text-on-surface-variant font-data-mono mt-xs flex justify-between">
+<span>Slippage Tolerance</span><span class="text-primary-container">0.1%</span>
+</div>
+</div>
+<button class="w-full bg-primary-container text-background font-[800] py-sm mt-sm flex justify-center items-center gap-xs">
+  Stake SLVT <span class="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="col-span-1 md:col-span-5 flex flex-col gap-md">
+<div class="bg-surface border border-primary-container/15 p-md flex flex-col gap-sm">
+<div class="border-b border-outline-variant/30 pb-xs mb-xs">
+<h3 class="text-label-caps font-label-caps text-on-surface-variant">Wallet Balance</h3>
+</div>
+<div class="flex items-end justify-between">
+<div class="flex flex-col gap-base">
+<span class="text-hero-num font-hero-num text-on-surface">12,450.00</span>
+<span class="text-data-mono font-data-mono text-on-surface-variant">SLVT</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-3xl" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+</div>
+<div class="bg-surface border border-primary-container/15 p-md flex flex-col gap-sm flex-grow">
+<div class="flex justify-between items-center border-b border-outline-variant/30 pb-xs mb-xs">
+<h3 class="text-label-caps font-label-caps text-on-surface-variant">Your sSLVT Position</h3>
+<div class="flex items-center gap-xs border border-[#b2ff00] rounded px-2 py-1">
+<span class="w-1.5 h-1.5 bg-[#b2ff00] rounded-full pulse-dot"></span>
+<span class="text-label-caps font-label-caps text-[#b2ff00]">Yield Accruing</span>
+</div>
+</div>
+<div class="flex flex-col gap-base mt-xs">
+<span class="text-data-mono font-data-mono text-on-surface-variant text-xs">Staked Balance</span>
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-lg font-headline-lg text-on-surface">4,200.50</span>
+<span class="text-data-mono font-data-mono text-on-surface-variant">sSLVT</span>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/30 my-sm"></div>
+<div class="flex flex-col gap-base">
+<span class="text-data-mono font-data-mono text-on-surface-variant text-xs">Earned Yield (Estimated)</span>
+<div class="flex items-baseline gap-xs">
+<span class="text-headline-lg font-headline-lg text-[#b2ff00]">+179.32</span>
+<span class="text-data-mono font-data-mono text-[#b2ff00]/70">SLVT</span>
+</div>
+<div class="mt-sm flex flex-col gap-base">
+<div class="flex justify-between text-xs text-on-surface-variant font-data-mono">
+<span>Epoch Progress</span><span>65%</span>
+</div>
+<div class="w-full h-[4px] bg-background">
+<div class="h-full bg-gradient-to-r from-primary-container to-[#b2ff00] w-[65%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full py-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container-lowest border-t border-outline-variant mt-auto">
+<div class="text-label-caps font-label-caps font-bold text-on-surface-variant">&copy; 2024 Solvent Protocol. Lab-Precise Liquidity.</div>
+<div class="flex gap-md">
+<a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Docs</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Security</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Analytics</a>
+<a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Status</a>
+</div>
+</footer>
+</body></html>

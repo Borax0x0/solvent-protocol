@@ -1,0 +1,154 @@
+<!-- Solvent: Deposit SOL -->
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solvent Protocol - Deposit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#7dd8af",
+                        "surface-bright": "#323b35",
+                        "surface-dim": "#0c1510",
+                        "surface-container-high": "#232c26",
+                        "on-secondary": "#003826",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "on-surface-variant": "#b9cbbe",
+                        "surface-tint": "#00e29d",
+                        "inverse-primary": "#006c49",
+                        "inverse-surface": "#dbe5dc",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffe16a",
+                        "tertiary": "#fffcff",
+                        "primary-fixed": "#47ffb8",
+                        "surface": "#0c1510",
+                        "primary-fixed-dim": "#00e29d",
+                        "on-surface": "#dbe5dc",
+                        "on-primary-fixed": "#002113",
+                        "on-tertiary": "#3a3000",
+                        "primary-container": "#00ffb2",
+                        "secondary": "#7dd8af",
+                        "outline": "#83958a",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#9bf7cc",
+                        "on-tertiary-container": "#756200",
+                        "secondary-container": "#027452",
+                        "surface-container-low": "#141e18",
+                        "on-secondary-fixed": "#002114",
+                        "on-secondary-fixed-variant": "#005138",
+                        "on-primary-container": "#00724d",
+                        "on-background": "#dbe5dc",
+                        "surface-variant": "#2d3731",
+                        "on-primary-fixed-variant": "#005236",
+                        "outline-variant": "#3a4a41",
+                        "on-tertiary-fixed": "#221b00",
+                        "inverse-on-surface": "#29332d",
+                        "background": "#0c1510",
+                        "tertiary-container": "#ffdf5a",
+                        "primary": "#f7fff8",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#2d3731",
+                        "surface-container-lowest": "#07100b",
+                        "secondary-fixed": "#99f5ca",
+                        "on-primary": "#003824",
+                        "surface-container": "#18221c",
+                        "tertiary-fixed-dim": "#e3c542"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "spacing": { "margin-desktop": "40px", "xs": "8px", "sm": "12px", "md": "20px", "xl": "48px", "gutter": "16px", "base": "4px", "lg": "32px" },
+                    "fontFamily": { "headline-lg": ["Inter"], "label-caps": ["Inter"], "body-lg": ["Inter"], "headline-md": ["Inter"], "body-sm": ["Inter"], "hero-num": ["Inter"], "data-mono": ["JetBrains Mono"] },
+                    "fontSize": {
+                        "headline-lg": ["26px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "800" }],
+                        "label-caps": ["11px", { "lineHeight": "1", "letterSpacing": "0.08em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "hero-num": ["32px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "data-mono": ["14px", { "lineHeight": "1", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-sm text-body-sm antialiased selection:bg-primary-container selection:text-surface">
+<nav class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-md px-margin-desktop h-16 flex items-center justify-between max-w-7xl mx-auto border-b border-outline-variant">
+<div class="flex items-center gap-xl">
+<div class="text-headline-md font-headline-lg font-extrabold text-primary-container tracking-tighter">Solvent</div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-primary-container border-b-2 border-primary-container font-bold pb-2" href="#">Deposit</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-2" href="#">Stake</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-2" href="#">Redeem</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors pb-2" href="#">Audit</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-data-mono font-data-mono text-on-surface-variant hidden sm:inline-block">$SLVT $1.42</span>
+<button class="bg-primary-container text-surface px-md py-sm font-label-caps text-label-caps uppercase">Connect Wallet</button>
+</div>
+</nav>
+<main class="flex-grow pt-[104px] pb-xl px-gutter md:px-margin-desktop max-w-7xl mx-auto w-full flex flex-col gap-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+<div class="bg-primary-container p-md border border-primary-container/15 flex flex-col gap-xs">
+<div class="text-label-caps font-label-caps uppercase text-surface/80">Total Deposited</div>
+<div class="text-hero-num font-hero-num text-surface">245,892.41 SOL</div>
+<div class="text-data-mono font-data-mono text-surface/70 mt-auto pt-sm border-t border-surface/20">~$34.2M USD</div>
+</div>
+<div class="bg-surface p-md border border-primary-container/15 flex flex-col gap-xs">
+<div class="text-label-caps font-label-caps uppercase text-on-surface-variant">sSLVT Exchange Rate</div>
+<div class="text-hero-num font-hero-num text-[#84cc16]">1.0412</div>
+<div class="text-data-mono font-data-mono text-on-surface-variant mt-auto pt-sm border-t border-outline-variant/30 flex items-center gap-base">
+<span class="material-symbols-outlined text-[16px] text-[#84cc16]">trending_up</span>+0.02% (24h)</div>
+</div>
+<div class="bg-surface p-md border border-primary-container/15 flex flex-col gap-xs">
+<div class="text-label-caps font-label-caps uppercase text-on-surface-variant">Solvency %</div>
+<div class="text-hero-num font-hero-num text-on-surface">104.2%</div>
+<div class="mt-auto pt-sm border-t border-outline-variant/30"><div class="h-[4px] bg-background w-full"><div class="h-full w-[100%] bg-gradient-to-r from-primary-container to-[#84cc16]"></div></div></div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-start">
+<div class="lg:col-span-8 bg-surface border border-primary-container/15 p-md md:p-lg flex flex-col gap-lg">
+<div class="border-b border-outline-variant/30 pb-sm"><h2 class="text-headline-md font-headline-md text-on-surface">Deposit SOL</h2></div>
+<div class="flex flex-col md:flex-row gap-sm items-center">
+<div class="w-full flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps uppercase text-on-surface-variant">You Receive (SLVT)</label>
+<div class="bg-background border border-outline-variant/20 focus-within:border-primary-container/100 transition-colors p-sm flex items-center gap-sm">
+<span class="text-body-lg font-body-lg text-on-surface-variant">SOL</span>
+<input class="bg-transparent border-none outline-none w-full text-right text-data-mono font-data-mono text-on-surface focus:ring-0" type="text" value="100.00"/></div>
+</div>
+<div class="pt-md md:pt-0"><span class="material-symbols-outlined text-primary-container/50">arrow_forward</span></div>
+<div class="w-full flex flex-col gap-xs">
+<label class="text-label-caps font-label-caps uppercase text-on-surface-variant">You Receive (SLVT)</label>
+<div class="bg-background border border-outline-variant/20 p-sm flex items-center gap-sm">
+<span class="text-body-lg font-body-lg text-on-surface-variant">sSLVT</span>
+<input class="bg-transparent border-none outline-none w-full text-right text-data-mono font-data-mono text-on-surface/50 focus:ring-0 cursor-not-allowed" readonly="" type="text" value="96.04"/></div>
+</div>
+</div>
+<button class="w-full bg-primary-container text-surface py-md text-headline-md font-headline-md">Deposit SOL</button>
+</div>
+<div class="lg:col-span-4 bg-surface border border-primary-container/15 p-md flex flex-col gap-md">
+<div class="border-b border-outline-variant/30 pb-sm"><h3 class="text-label-caps font-label-caps uppercase text-on-surface-variant">Transaction Breakdown</h3></div>
+<div class="flex flex-col gap-sm text-data-mono font-data-mono">
+<div class="flex justify-between"><span class="text-on-surface-variant">Pyth Oracle Price</span><span class="text-on-surface">$139.42</span></div>
+<div class="h-[1px] w-full bg-outline-variant/20"></div>
+<div class="flex justify-between"><span class="text-on-surface-variant">Exchange Rate</span><span class="text-on-surface">1 SOL = 194.89 SLVT</span></div>
+<div class="h-[1px] w-full bg-outline-variant/20"></div>
+<div class="flex justify-between"><span class="text-on-surface-variant">Keeper Allocation</span><span class="text-primary-container">0.001 SOL</span></div>
+<div class="h-[1px] w-full bg-outline-variant/20"></div>
+<div class="flex justify-between"><span class="text-on-surface-variant">Network Fee</span><span class="text-on-surface">0.000005 SOL</span></div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full py-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md border-t border-outline-variant bg-surface-container-lowest text-on-surface-variant mt-auto">
+<div class="text-label-caps font-label-caps font-bold">&copy; 2024 Solvent Protocol. Lab-Precise Liquidity.</div>
+<div class="flex gap-md"><a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Docs</a><a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Security</a><a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Analytics</a><a class="text-on-secondary-fixed-variant hover:text-primary-container uppercase" href="#">Status</a></div>
+</footer>
+</body></html>

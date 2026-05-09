@@ -1,10 +1,10 @@
 {
-  "name": "susd-protocol",
+  "name": "solvent-protocol",
   "version": "1.0.0",
-  "description": "",
+  "description": "Solvent Protocol - Delta-neutral stablecoin vault with yield staking",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require tsx/cjs --ui bdd --timeout 60000 tests/susd-core.ts"
+    "test": "mocha --require tsx/cjs --timeout 60000 tests/slvt-core.ts"
   },
   "keywords": [],
   "author": "",
