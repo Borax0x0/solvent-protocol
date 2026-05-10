@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useProtocol } from "@/lib/useProtocol";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 
 const NAV = [
   { label: "Deposit", href: "/deposit" },
@@ -17,8 +16,7 @@ const NAV = [
 export function Nav() {
   const pathname = usePathname();
   const { connected, publicKey, disconnect } = useWallet();
-  const { solBalance } = useProtocol();
-  const [showDisconnect, setShowDisconnect] = useState(false);
+  const { visible, setVisible } = useWalletModal();
   const addr = publicKey ? publicKey.toBase58().slice(0, 3) + "…" + publicKey.toBase58().slice(-3) : "";
 
   return (
@@ -32,7 +30,7 @@ export function Nav() {
           >
             [S]
           </motion.span>
-          <span className="text-ink font-extrabold text-sm tracking-tight">Solvent</span>
+          <span className="text-ink font-bold text-sm tracking-tight" style={{ fontFamily: "var(--font-space-grotesk)" }}>Solvent</span>
         </Link>
         <div className="hidden md:flex items-center gap-0.5">
           {NAV.map((n) => (
@@ -61,35 +59,13 @@ export function Nav() {
           Devnet
         </div>
         {connected && publicKey ? (
-          <div
-            className="relative"
-            onMouseEnter={() => setShowDisconnect(true)}
-            onMouseLeave={() => setShowDisconnect(false)}
-          >
-            <motion.button
-              className="flex items-center gap-2 text-[11px] font-mono text-muted hover:text-ink transition-colors bg-surface/50 px-2 py-0.5 border border-border"
-              whileHover={{ borderColor: "rgba(0,255,178,0.2)" }}
-            >
-              <span className="text-ink">◎ {solBalance.toFixed(2)}</span>
-              <span>{addr}</span>
-            </motion.button>
-            <AnimatePresence>
-              {showDisconnect && (
-                <motion.button
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  onClick={() => { disconnect(); setShowDisconnect(false); }}
-                  className="absolute top-full right-0 mt-1 text-[10px] font-bold uppercase tracking-wider text-frozen bg-surface border border-frozen/20 px-3 py-1 hover:bg-frozen/10"
-                >
-                  Disconnect
-                </motion.button>
-              )}
-            </AnimatePresence>
+          <div className="flex items-center gap-2 text-[11px] font-mono text-muted bg-surface/50 px-2 py-0.5 border border-border">
+            <span className="text-ink">{addr}</span>
+            <button onClick={disconnect} className="text-frozen hover:text-frozen/80 text-[10px] font-bold uppercase tracking-wider ml-1">✕</button>
           </div>
         ) : (
           <motion.button
-            onClick={() => (document.querySelector(".wallet-adapter-button") as HTMLButtonElement)?.click()}
+            onClick={() => setVisible(true)}
             className="btn-primary text-[11px] px-3 py-1"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

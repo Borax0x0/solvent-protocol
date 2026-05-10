@@ -63,6 +63,8 @@ pub fn handler(ctx: Context<Deposit>, amount_lamports: u64) -> Result<()> {
     let slvt_amount = (amount_lamports as u128)
         .checked_mul(ctx.accounts.vault_config.sol_price_usd as u128)
         .ok_or(ErrorCode::MathOverflow)?
+        .checked_mul(1_000_000)
+        .ok_or(ErrorCode::MathOverflow)?
         .checked_div(100_000_000_000)
         .ok_or(ErrorCode::MathOverflow)? as u64;
 

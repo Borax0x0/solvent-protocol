@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { AppLayout } from "@/components/AppLayout";
 import { TxButton } from "@/components/TxButton";
 import { useProtocol } from "@/lib/useProtocol";
@@ -10,6 +11,7 @@ import { FadeIn } from "@/components/Motion";
 
 export default function StakePage() {
   const { connected } = useWallet();
+  const { setVisible } = useWalletModal();
   const { stake, unstake, slvtBalance, sslvtBalance, exchangeRate } = useProtocol();
   const [input, setInput] = useState("");
   const [mode, setMode] = useState<"stake" | "unstake">("stake");
@@ -124,7 +126,7 @@ export default function StakePage() {
 
               {!connected ? (
                 <motion.button
-                  onClick={() => (document.querySelector(".wallet-adapter-button") as HTMLButtonElement)?.click()}
+                  onClick={() => setVisible(true)}
                   className="btn-primary w-full py-3 text-xs"
                   whileHover={{ scale: 1.005 }}
                   whileTap={{ scale: 0.995 }}

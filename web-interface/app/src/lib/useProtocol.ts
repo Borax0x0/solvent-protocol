@@ -1,6 +1,6 @@
 "use client";
 
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet, useAnchorWallet } from "@solana/wallet-adapter-react";
 import { Program, AnchorProvider, Idl, BN } from "@coral-xyz/anchor";
 import { PublicKey, LAMPORTS_PER_SOL, SystemProgram, SYSVAR_RENT_PUBKEY } from "@solana/web3.js";
 import {
@@ -48,6 +48,7 @@ function getProgram(connection: any, wallet: any): Program {
 export function useProtocol() {
   const { connection } = useConnection();
   const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
   const [vaultConfig, setVaultConfig] = useState<VaultConfigData | null>(null);
   const [stakingState, setStakingState] = useState<StakingStateData | null>(null);
   const [vaultBalance, setVaultBalance] = useState<number>(0);
@@ -70,9 +71,9 @@ export function useProtocol() {
 
       if (vc.totalEquityUsd.toNumber() > 0 && vc.solPriceUsd.toNumber() > 0) {
         const slvtSupply = await connection.getTokenSupply(slvtMintPda);
-        const supplyUsd = slvtSupply.value.uiAmount! * (vc.solPriceUsd.toNumber() / 100);
+        const supplyUsd = slvtSupply.value.uiAmount! * 0.01;
         const equityUsd = vc.totalEquityUsd.toNumber() / 100;
-        const solv = Math.min(100, (equityUsd / supplyUsd) * 100);
+        const solv = Math.min(100, supplyUsd > 0 ? (equityUsd / supplyUsd) * 100 : 100);
         setSolvencyPct(Math.round(solv * 10) / 10);
       }
 
@@ -101,7 +102,7 @@ export function useProtocol() {
     } finally {
       setLoading(false);
     }
-  }, [connection, wallet.publicKey]);
+  }, [connection, wallet.publicKey?.toBase58()]);
 
   useEffect(() => {
     refresh();
@@ -111,10 +112,10 @@ export function useProtocol() {
 
   const deposit = useCallback(
     async (solAmount: number) => {
-      if (!wallet.publicKey || !wallet.signTransaction) throw new Error("Wallet not connected");
-      const program = getProgram(connection, wallet);
+      if (!anchorWallet) throw new Error("Wallet not connected");
+      const program = getProgram(connection, anchorWallet);
       const lamports = new BN(Math.floor(solAmount * LAMPORTS_PER_SOL));
-      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey);
+      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey!);
       const tx = await (program as any).methods
         .deposit(lamports)
         .accounts({
@@ -132,14 +133,14 @@ export function useProtocol() {
       await refresh();
       return tx;
     },
-    [connection, wallet, refresh]
+    [connection, wallet, anchorWallet, refresh]
   );
 
   const redeem = useCallback(
     async (slvtAmount: number) => {
-      if (!wallet.publicKey || !wallet.signTransaction) throw new Error("Wallet not connected");
-      const program = getProgram(connection, wallet);
-      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey);
+      if (!anchorWallet) throw new Error("Wallet not connected");
+      const program = getProgram(connection, anchorWallet);
+      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey!);
       const slvtInfo = await connection.getTokenAccountBalance(userSlvtAta);
       const rawAmount = new BN(slvtInfo.value.amount);
       const burnAmount = slvtAmount >= 1 ? rawAmount : rawAmount.muln(slvtAmount).divn(1);
@@ -159,15 +160,15 @@ export function useProtocol() {
       await refresh();
       return tx;
     },
-    [connection, wallet, refresh]
+    [connection, wallet, anchorWallet, refresh]
   );
 
   const stake = useCallback(
     async (slvtAmount: number) => {
-      if (!wallet.publicKey || !wallet.signTransaction) throw new Error("Wallet not connected");
-      const program = getProgram(connection, wallet);
-      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey);
-      const userSslvtAta = await getAssociatedTokenAddress(sslvtMintPda, wallet.publicKey);
+      if (!anchorWallet) throw new Error("Wallet not connected");
+      const program = getProgram(connection, anchorWallet);
+      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey!);
+      const userSslvtAta = await getAssociatedTokenAddress(sslvtMintPda, wallet.publicKey!);
       const stakingSlvtAta = await getAssociatedTokenAddress(slvtMintPda, stakingStatePda, true);
       const slvtInfo = await connection.getTokenAccountBalance(userSlvtAta);
       const rawAmount = new BN(slvtInfo.value.amount);
@@ -192,15 +193,15 @@ export function useProtocol() {
       await refresh();
       return tx;
     },
-    [connection, wallet, refresh]
+    [connection, wallet, anchorWallet, refresh]
   );
 
   const unstake = useCallback(
     async (sslvtAmount: number) => {
-      if (!wallet.publicKey || !wallet.signTransaction) throw new Error("Wallet not connected");
-      const program = getProgram(connection, wallet);
-      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey);
-      const userSslvtAta = await getAssociatedTokenAddress(sslvtMintPda, wallet.publicKey);
+      if (!anchorWallet) throw new Error("Wallet not connected");
+      const program = getProgram(connection, anchorWallet);
+      const userSlvtAta = await getAssociatedTokenAddress(slvtMintPda, wallet.publicKey!);
+      const userSslvtAta = await getAssociatedTokenAddress(sslvtMintPda, wallet.publicKey!);
       const stakingSlvtAta = await getAssociatedTokenAddress(slvtMintPda, stakingStatePda, true);
       const sslvtInfo = await connection.getTokenAccountBalance(userSslvtAta);
       const rawAmount = new BN(sslvtInfo.value.amount);
@@ -223,7 +224,7 @@ export function useProtocol() {
       await refresh();
       return tx;
     },
-    [connection, wallet, refresh]
+    [connection, wallet, anchorWallet, refresh]
   );
 
   const fetchYieldReceipts = useCallback(

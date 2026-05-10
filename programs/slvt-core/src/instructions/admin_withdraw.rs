@@ -38,7 +38,9 @@ pub fn handler(ctx: Context<AdminWithdraw>, amount_lamports: u64) -> Result<()> 
     let vault_sol = ctx.accounts.vault_escrow.lamports();
     let slvt_supply = ctx.accounts.slvt_mint.supply;
 
-    let min_buffer = (slvt_supply as u128)
+    let slvt_supply_ui = (ctx.accounts.slvt_mint.supply as u128) / 1_000_000;
+
+    let min_buffer = slvt_supply_ui
         .checked_mul(ctx.accounts.vault_config.liquidity_buffer_bps as u128)
         .ok_or(ErrorCode::MathOverflow)?
         .checked_div(10000)

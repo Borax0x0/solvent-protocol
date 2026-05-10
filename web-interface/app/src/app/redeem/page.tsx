@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
 import { AppLayout } from "@/components/AppLayout";
 import { TxButton } from "@/components/TxButton";
 import { useProtocol } from "@/lib/useProtocol";
@@ -10,6 +11,7 @@ import { FadeIn, NumberPulse } from "@/components/Motion";
 
 export default function RedeemPage() {
   const { connected } = useWallet();
+  const { setVisible } = useWalletModal();
   const { redeem, slvtBalance, solvencyPct, solPriceUsd } = useProtocol();
   const [slvtInput, setSlvtInput] = useState("");
 
@@ -116,7 +118,7 @@ export default function RedeemPage() {
 
               {!connected ? (
                 <motion.button
-                  onClick={() => (document.querySelector(".wallet-adapter-button") as HTMLButtonElement)?.click()}
+                  onClick={() => setVisible(true)}
                   className="btn-primary w-full py-3 text-xs"
                   whileHover={{ scale: 1.005 }}
                   whileTap={{ scale: 0.995 }}

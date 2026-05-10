@@ -34,9 +34,9 @@ pub fn handler(ctx: Context<UpdateEquity>, total_equity_usd: u64, sol_price_usd:
     ctx.accounts.vault_config.total_equity_usd = total_equity_usd;
     ctx.accounts.vault_config.sol_price_usd = sol_price_usd;
 
-    let slvt_supply = ctx.accounts.slvt_mint.supply;
+    let slvt_supply_ui = (ctx.accounts.slvt_mint.supply as u128) / 1_000_000;
 
-    if total_equity_usd < slvt_supply {
+    if (total_equity_usd as u128) < slvt_supply_ui {
         ctx.accounts.vault_config.is_frozen = true;
     } else if ctx.accounts.vault_config.is_frozen {
         ctx.accounts.vault_config.is_frozen = false;

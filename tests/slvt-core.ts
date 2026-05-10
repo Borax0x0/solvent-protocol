@@ -496,7 +496,7 @@ describe("Solvent Protocol - slvt-core", () => {
       const r = await ctx.deposit(ctx.user, depositAmt);
       expect(r.ok, `deposit failed: ${r.metaStr.slice(0, 300)}`).to.be.true;
 
-      const expected = BigInt(depositAmt) * BigInt(SOL_PRICE_CENTS) / 100_000_000_000n;
+      const expected = BigInt(depositAmt) * BigInt(SOL_PRICE_CENTS) * 1_000_000n / 100_000_000_000n;
       const bal = ctx.getSlvtBalance(ctx.userPk());
       expect(bal).to.equal(expected);
     });
@@ -595,7 +595,7 @@ describe("Solvent Protocol - slvt-core", () => {
       await ctx.deposit(user5, 1_000_000_000);
 
       const vaultSol = ctx.getVaultSol();
-      const supply = ctx.getSlvtSupply();
+      const supply = ctx.getSlvtSupply() / 1_000_000n;
       const minBuffer = supply * BigInt(BUFFER_BPS) / 10000n * 100_000_000_000n / BigInt(SOL_PRICE_CENTS);
       const maxAdminWithdraw = vaultSol - minBuffer;
       if (maxAdminWithdraw > 0n) {
@@ -692,7 +692,7 @@ describe("Solvent Protocol - slvt-core", () => {
     it("cannot withdraw beyond buffer", async () => {
       await ctx.updateEquity(999_999_999_999, SOL_PRICE_CENTS);
       const vaultSol = ctx.getVaultSol();
-      const supply = ctx.getSlvtSupply();
+      const supply = ctx.getSlvtSupply() / 1_000_000n;
       const minBuffer = supply * BigInt(BUFFER_BPS) / 10000n * 100_000_000_000n / BigInt(SOL_PRICE_CENTS);
       const maxAdminWithdraw = vaultSol - minBuffer;
       if (maxAdminWithdraw > 0n) {

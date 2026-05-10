@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-void: #07101A;
-  --color-surface: #0C1F2C;
-  --color-elevated: #153A5A;
+  --color-void: #06100D;
+  --color-surface: #0A1A14;
+  --color-elevated: #0F2A1E;
   --color-teal: #00FFB2;
-  --color-acid: #A0FF82;
-  --color-ink: #E2F0EC;
-  --color-muted: #4A8A70;
+  --color-acid: #AAFF2E;
+  --color-ink: #E4F5ED;
+  --color-muted: #6BA882;
   --color-frozen: #FF4855;
-  --color-border: rgba(0,255,178,0.12);
-  --color-background: #07101A;
-  --color-on-surface: #E2F0EC;
-  --font-sans: var(--font-inter);
+  --color-border: rgba(0,255,178,0.1);
+  --color-background: #06100D;
+  --color-on-surface: #E4F5ED;
+  --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-jetbrains-mono);
+  --font-display: var(--font-space-grotesk);
 }
 
 body {
@@ -43,8 +44,9 @@ input:focus { outline: none; }
 }
 
 .card {
-  background: linear-gradient(135deg, rgba(12,31,44,0.95), rgba(12,31,44,0.8));
-  border: 1px solid rgba(0,255,178,0.08);
+  background: rgba(10, 26, 20, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0,255,178,0.15);
   border-radius: 2px;
   position: relative;
   overflow: hidden;
@@ -73,9 +75,9 @@ input:focus { outline: none; }
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #00FFB2, #00e29d);
-  color: #07101A;
-  font-weight: 800;
+  background: linear-gradient(135deg, #00FFB2, #AAFF2E);
+  color: #06100D;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   transition: all 0.2s ease;
@@ -103,7 +105,7 @@ input:focus { outline: none; }
 .btn-frozen {
   background: linear-gradient(135deg, #FF4855, #e63e4a);
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   transition: all 0.2s ease;
@@ -126,21 +128,21 @@ input:focus { outline: none; }
 }
 
 .input-field {
-  background: linear-gradient(135deg, #153A5A, #122f48);
-  border: 1px solid rgba(0,255,178,0.08);
+  background: #06100D;
+  border: 1px solid rgba(0,255,178,0.15);
   transition: all 0.3s ease;
 }
 .input-field:focus-within {
-  border-color: rgba(0,255,178,0.25);
-  box-shadow: 0 0 20px rgba(0,255,178,0.05);
+  border-color: rgba(0,255,178,0.35);
+  box-shadow: 0 0 20px rgba(0,255,178,0.08);
 }
 
 .solv-bar {
-  background: linear-gradient(90deg, rgba(0,255,178,0.1), rgba(160,255,130,0.05));
+  background: linear-gradient(90deg, rgba(0,255,178,0.1), rgba(170,255,46,0.05));
   position: relative;
 }
 .solv-bar .fill {
-  background: linear-gradient(90deg, #00FFB2, #A0FF82);
+  background: linear-gradient(90deg, #00FFB2, #AAFF2E);
   position: relative;
 }
 .solv-bar .fill::after {
@@ -150,9 +152,9 @@ input:focus { outline: none; }
   top: -2px;
   bottom: -2px;
   width: 6px;
-  background: #A0FF82;
+  background: #AAFF2E;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(160,255,130,0.6);
+  box-shadow: 0 0 8px rgba(170,255,46,0.6);
 }
 
 .stat-divider {

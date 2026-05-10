@@ -47,13 +47,17 @@ pub fn handler(ctx: Context<Redeem>, slvt_amount: u64) -> Result<()> {
 
     let slvt_supply = ctx.accounts.slvt_mint.supply;
 
-    let redeemable_ratio: u8 = if ctx.accounts.vault_config.total_equity_usd >= slvt_supply {
+    let slvt_supply_ui = (ctx.accounts.slvt_mint.supply as u128)
+        .checked_div(1_000_000)
+        .ok_or(ErrorCode::MathOverflow)?;
+
+    let redeemable_ratio: u8 = if ctx.accounts.vault_config.total_equity_usd as u128 >= slvt_supply_ui {
         100
     } else {
         let ratio = (ctx.accounts.vault_config.total_equity_usd as u128)
             .checked_mul(100)
             .ok_or(ErrorCode::MathOverflow)?
-            .checked_div(slvt_supply as u128)
+            .checked_div(slvt_supply_ui)
             .ok_or(ErrorCode::MathOverflow)? as u8;
         ratio.min(100)
     };
@@ -74,10 +78,16 @@ pub fn handler(ctx: Context<Redeem>, slvt_amount: u64) -> Result<()> {
         .checked_mul(100_000_000_000)
         .ok_or(ErrorCode::MathOverflow)?
         .checked_div(ctx.accounts.vault_config.sol_price_usd as u128)
+        .ok_or(ErrorCode::MathOverflow)?
+        .checked_div(1_000_000)
         .ok_or(ErrorCode::MathOverflow)? as u64;
 
     let vault_sol = ctx.accounts.vault_escrow.lamports();
-    let min_buffer = (slvt_supply as u128)
+    let slvt_supply_ui = (ctx.accounts.slvt_mint.supply as u128)
+        .checked_div(1_000_000)
+        .ok_or(ErrorCode::MathOverflow)?;
+
+    let min_buffer = slvt_supply_ui
         .checked_mul(ctx.accounts.vault_config.liquidity_buffer_bps as u128)
         .ok_or(ErrorCode::MathOverflow)?
         .checked_div(10000)
