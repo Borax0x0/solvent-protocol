@@ -70,12 +70,12 @@ export default function AuditPage() {
             <div className="p-4 border-b border-border flex justify-between items-center">
               <h2 className="text-xs font-bold text-ink">Yield Receipts</h2>
               <a
-                href={`https://explorer.solana.com/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
+                href={`https://solscan.io/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] font-mono text-teal hover:underline"
               >
-                {receipts.length} PDAs · {PROGRAM_ID.toBase58().slice(0, 4)}…{PROGRAM_ID.toBase58().slice(-4)} ↗
+                {receipts.length} PDAs · Solscan ↗
               </a>
             </div>
 
@@ -118,12 +118,12 @@ export default function AuditPage() {
                           <td className="p-3 text-right">${(r.totalYieldUsd.toNumber() / 100).toFixed(2)}</td>
                           <td className="p-3 text-right">
                             <a
-                              href={`https://explorer.solana.com/address/${pda.toBase58()}?cluster=devnet`}
+                              href={`https://solscan.io/address/${pda.toBase58()}?cluster=devnet`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-teal hover:underline"
                             >
-                              PDA ↗
+                              #{r.receiptIndex} ↗
                             </a>
                           </td>
                         </motion.tr>

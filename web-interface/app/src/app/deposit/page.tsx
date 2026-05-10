@@ -16,7 +16,7 @@ export default function DepositPage() {
   const [solInput, setSolInput] = useState("");
 
   const solAmount = parseFloat(solInput) || 0;
-  const slvtEstimate = solPriceUsd > 0 ? solAmount * solPriceUsd * 100 : 0;
+  const slvtEstimate = solPriceUsd > 0 ? solAmount * solPriceUsd : 0;
   const isFrozen = vaultConfig?.isFrozen ?? false;
 
   const handleDeposit = useCallback(async () => {
