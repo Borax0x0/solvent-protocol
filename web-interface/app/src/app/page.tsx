@@ -330,7 +330,7 @@ export default function LandingPage() {
     setIsScrolled(latest > 20);
   });
 
-  const rotatingWords = ["solvent.", "liquid.", "redeemable.", "delta-neutral.", "auditable."];
+  const rotatingWords = ["solvent.", "transparent.", "secure.", "stable."];
   const [rotatingIndex, setRotatingIndex] = useState(0);
 
   useEffect(() => {
