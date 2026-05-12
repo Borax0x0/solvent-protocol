@@ -6,6 +6,7 @@ import { Shield, Activity, Zap, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { useProtocol } from "@/lib/useProtocol";
 
 function GithubIcon({ size = 20 }: { size?: number }) {
   return (
@@ -324,6 +325,7 @@ export default function LandingPage() {
   const { scrollY } = useScroll();
   const { connected, publicKey, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
+  const { vaultBalance, solvencyPct, exchangeRate, solPriceUsd, loading } = useProtocol();
   const addr = publicKey ? publicKey.toBase58().slice(0, 4) + "…" + publicKey.toBase58().slice(-4) : "";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -473,15 +475,15 @@ export default function LandingPage() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
           >
             <div className="bg-white/5 backdrop-blur-sm border border-[#00FFB2]/20 rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-[#00FFB2]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>$124,500</div>
+              <div className="text-2xl font-bold text-[#00FFB2]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>${loading ? "—" : vaultBalance * solPriceUsd >= 1000 ? `${(vaultBalance * solPriceUsd / 1000).toFixed(1)}K` : (vaultBalance * solPriceUsd).toFixed(0)}</div>
               <div className="text-xs text-[#6BA882] uppercase tracking-[0.06em] mt-1" style={{ fontFamily: "var(--font-dm-sans)" }}>TVL</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-[#AAFF2E]/20 rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-[#AAFF2E]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>91.4%</div>
+              <div className="text-2xl font-bold text-[#AAFF2E]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{loading ? "—" : `${solvencyPct}%`}</div>
               <div className="text-xs text-[#6BA882] uppercase tracking-[0.06em] mt-1" style={{ fontFamily: "var(--font-dm-sans)" }}>Solvency</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-[#00FFB2]/20 rounded-lg p-4 text-center">
-              <div className="text-2xl font-bold text-[#00FFB2]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>1.008300</div>
+              <div className="text-2xl font-bold text-[#00FFB2]" style={{ fontFamily: "var(--font-jetbrains-mono)" }}>{loading ? "—" : exchangeRate.toFixed(6)}</div>
               <div className="text-xs text-[#6BA882] uppercase tracking-[0.06em] mt-1" style={{ fontFamily: "var(--font-dm-sans)" }}>sSLVT Rate</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-[#AAFF2E]/20 rounded-lg p-4 text-center">
