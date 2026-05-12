@@ -164,7 +164,7 @@ const FloatingPaths: React.FC<{ position: number }> = ({ position }) => {
   }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none opacity-30">
+    <div className="absolute inset-0 pointer-events-none opacity-45">
       <svg className="w-full h-full text-[#00FFB2]" viewBox="0 0 696 316" fill="none">
         <title>Background Paths</title>
         {paths.map((path) => (
@@ -173,9 +173,9 @@ const FloatingPaths: React.FC<{ position: number }> = ({ position }) => {
             d={path.d}
             stroke="currentColor"
             strokeWidth={path.width}
-            strokeOpacity={0.1 + path.id * 0.02}
-            initial={{ pathLength: 0.3, opacity: 0.4 }}
-            animate={{ pathLength: 1, opacity: [0.2, 0.5, 0.2], pathOffset: [0, 1, 0] }}
+            strokeOpacity={0.15 + path.id * 0.03}
+            initial={{ pathLength: 0.3, opacity: 0.5 }}
+            animate={{ pathLength: 1, opacity: [0.3, 0.7, 0.3], pathOffset: [0, 1, 0] }}
             transition={{ duration: 20 + Math.random() * 10, repeat: Infinity, ease: "linear" }}
           />
         ))}
@@ -330,7 +330,15 @@ export default function LandingPage() {
     setIsScrolled(latest > 20);
   });
 
-  const headlineWords = ["The", "stablecoin", "that", "stays", "solvent."];
+  const rotatingWords = ["solvent.", "liquid.", "redeemable.", "delta-neutral.", "auditable."];
+  const [rotatingIndex, setRotatingIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingIndex((i) => (i + 1) % rotatingWords.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#06100D] text-[#E4F5ED] overflow-x-hidden">
@@ -357,9 +365,7 @@ export default function LandingPage() {
         >
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-[#00FFB2] rounded flex items-center justify-center" style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 800 }}>
-                <span className="text-[#06100D] text-sm">S</span>
-              </div>
+              <img src="/logo.png" alt="Solvent" className="w-8 h-8 object-contain" />
               <span className="text-xl" style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 800 }}>Solvent</span>
             </div>
 
@@ -399,28 +405,22 @@ export default function LandingPage() {
             </span>
           </motion.div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl leading-tight mb-6" style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 800 }}>
-            {headlineWords.map((word, wordIndex) => (
-              <span key={wordIndex} className="inline-block mr-3 md:mr-4">
-                {word.split("").map((letter, letterIndex) => (
-                  <motion.span
-                    key={`${wordIndex}-${letterIndex}`}
-                    initial={{ y: 100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{
-                      delay: wordIndex * 0.1 + letterIndex * 0.03,
-                      type: "spring",
-                      stiffness: 150,
-                      damping: 25,
-                    }}
-                    className={`inline-block ${wordIndex === headlineWords.length - 1 ? "text-[#00FFB2]" : "text-[#E4F5ED]"}`}
-                    style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 800 }}
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
-              </span>
-            ))}
+          <h1 style={{ fontFamily: "var(--font-space-grotesk)", fontWeight: 800 }}>
+            <span className="block text-5xl md:text-7xl lg:text-8xl leading-none text-[#E4F5ED] whitespace-nowrap">The stablecoin</span>
+            <span className="block text-5xl md:text-7xl lg:text-8xl leading-none text-[#E4F5ED] mt-2">that stays</span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={rotatingWords[rotatingIndex]}
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -30, opacity: 0 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="block text-5xl md:text-7xl lg:text-8xl leading-none text-[#00FFB2] mt-2"
+                    style={{ fontFamily: "var(--font-playfair)", fontStyle: "italic" }}
+              >
+                {rotatingWords[rotatingIndex]}
+              </motion.span>
+            </AnimatePresence>
           </h1>
 
           <motion.p

@@ -152,7 +152,7 @@ export default function StakePage() {
                 <span className="text-[10px] font-bold uppercase tracking-[0.06em] text-muted">Your sSLVT Position</span>
                 <span className="flex items-center gap-1.5 text-acid">
                   <span className="w-1.5 h-1.5 bg-acid rounded-full animate-pulse-dot shadow-[0_0_6px_rgba(170,255,46,0.5)]" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider animate-pulse-dot">Yield Accruing</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Yield Accruing</span>
                 </span>
               </div>
               <div className="text-xl font-extrabold text-ink font-mono">{sslvtBalance.toFixed(2)}</div>

@@ -5,6 +5,35 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type TxState = "idle" | "loading" | "success" | "error";
 
+const ERROR_MAP: Record<string, string> = {
+  ProtocolFrozen: "Protocol is frozen — deposits are temporarily disabled.",
+  OracleNotSet: "Oracle price not set. Contact the team.",
+  ZeroAmount: "Amount cannot be zero.",
+  MintMismatch: "Mint address mismatch. Try again.",
+  MathOverflow: "Calculation error. Try a smaller amount.",
+  Unauthorized: "Unauthorized — only the admin can do this.",
+  ProtocolUnderwater: "Protocol has zero solvency. Redemptions disabled.",
+  InsufficientLiquidity: "Insufficient liquidity in vault. Try a smaller amount or wait.",
+  BufferExceeded: "Withdrawal would breach liquidity buffer.",
+  InsufficientStakingLiquidity: "Not enough SLVT in staking vault.",
+  RateCannotDecrease: "Exchange rate cannot decrease.",
+  InvalidBufferBps: "Invalid buffer configuration.",
+  "InsufficientFunds": "Insufficient SOL balance for this transaction.",
+  "User rejected": "Transaction was cancelled.",
+};
+
+function translateError(msg: string): string {
+  for (const [key, val] of Object.entries(ERROR_MAP)) {
+    if (msg.includes(key)) return val;
+  }
+  if (msg.includes("custom program error")) {
+    const match = msg.match(/0x([0-9a-f]+)/i);
+    if (match) return `Transaction failed (error code ${match[1]}). Try again or use a smaller amount.`;
+  }
+  if (msg.length > 80) return msg.slice(0, 80) + "…";
+  return msg || "Transaction failed. Please try again.";
+}
+
 export function TxButton({
   label,
   onExecute,
@@ -28,7 +57,7 @@ export function TxButton({
       setTxSig(sig);
       setState("success");
     } catch (e: any) {
-      setErrorMsg(e?.message?.slice(0, 120) || "Transaction failed");
+      setErrorMsg(translateError(e?.message || "Transaction failed"));
       setState("error");
     }
   }, [onExecute]);
